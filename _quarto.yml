@@ -55,3 +55,4 @@ format:
 
 
 editor: visual
+quarto render
