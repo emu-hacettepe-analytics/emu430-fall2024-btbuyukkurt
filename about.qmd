@@ -6,6 +6,7 @@ sidebar: false
 # Education
 
 -   B.S., Industrial Engineering, Hacettepe University, Turkey, 20xx - ongoing.
+-   B.S., Industrial Engineering, Hacettepe University, Turkey, 2022 - ongoing.
 
 # Work Experience
 
@@ -18,6 +19,8 @@ sidebar: false
 ## Internships
 
 1.  Firm aaa, position xx, year xxx
+1.   Sarigozoglu, Production Planning Intern 01/07/2024-29/07/2024
+
 
 2.  Firm bbb, position yyy, year yyy
 
@@ -28,3 +31,6 @@ sidebar: false
 R, Quarto, Git, Python
 
 # Hobbies
+# CV
+ https://drive.google.com/file/d/1l4YTXjcYHj93lnxl7TK3GgoEaXjrulzs/view?usp=drive_link
+
