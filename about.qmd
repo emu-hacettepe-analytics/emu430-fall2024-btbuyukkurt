@@ -24,7 +24,8 @@ sidebar: false
 R, Quarto, Git, Python
 
 # Hobbies
-Playing vide games, Music, Almost everything related with computers
+Playing video games, Music, Almost everything related with computers
+
 # CV
 [CV](https://drive.google.com/file/d/1l4YTXjcYHj93lnxl7TK3GgoEaXjrulzs/view?usp=sharing)
 
