@@ -3,11 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "[Student/Group Full Name]'s Analytics Lab"
-  title: "[Batuhan B??y??kkurt/EMU430]'s Analytics Lab"
-  title: "[Batuhan Buyukkurt/EMU430]'s Analytics Lab"
-  title: "[Batuhan Büyükkurt/EMU430]'s Analytics Lab"
+  title: "Batuhan's Analytics Lab Site"
   navbar:
+    title: "Batuhan's Analytics Lab Site"
     search: true
     left:
       - text: Home
@@ -26,8 +24,6 @@ website:
     tools:
       - icon: github
         href: https://github.com/btbuyukkurt
-      - icon: twitter
-        href: https://twitter.com
       - icon: linkedin
         href: https://www.linkedin.com/in/batuhan-turhan-büyükkurt-b7878a250/
 
@@ -42,7 +38,7 @@ website:
   page-navigation: true
   back-to-top-navigation: true
   page-footer:
-    center: "Hacettepe IE - EMU430 - 2024 Fall" 
+    center: "Hacettepe IE - EMU 430 - Fall 2024" 
     border: true
 format:
   html:
@@ -55,4 +51,3 @@ format:
 
 
 editor: visual
-quarto render
