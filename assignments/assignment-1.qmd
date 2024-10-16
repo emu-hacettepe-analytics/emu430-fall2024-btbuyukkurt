@@ -47,7 +47,7 @@ z <- 0
 for (col in names(guncelpolls)) {
   z <- z + sum(is.na(guncelpolls[[col]]))
 }
-print(paste("Toplam NA say??s??:", z))
+print(paste("Toplam NA sayisi:", z))
 
 print(head(guncelpolls, 10))  
 
