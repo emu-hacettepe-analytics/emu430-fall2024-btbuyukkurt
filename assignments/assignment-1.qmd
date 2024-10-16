@@ -3,17 +3,12 @@ title: "Assignment 1"
 ---
 
 # Assignment 1
-
-```{r}
-1 + 1
-```
-
 My first assignment has two parts.
-
 ## (a)
 
-## (b)
 
+## (b) :
+```{r}
 install.packages("dslabs")  
 library(dslabs)
 
@@ -52,4 +47,5 @@ print(paste("Toplam NA sayisi:", z))
 print(head(guncelpolls, 10))  
 
 
+```
 
