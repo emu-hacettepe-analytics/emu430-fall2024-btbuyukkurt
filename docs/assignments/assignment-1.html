@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>assignment-1 – Batuhan's Analytics Lab Site</title>
+<title>Assignment 1 – Batuhan’s Analytics Lab Site</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -167,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments/assignment-1.html">title: “Assignment 1”</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments/assignment-1.html">Assignment 1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../assignments/assignment-1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">title: “Assignment 1”</span></a>
+ <span class="menu-text">Assignment 1</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -226,11 +226,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assignment 1</h1>
+</div>
 
 
 
-<p>install.packages(“knitr”) title: “Assignment 1”</p>
-<hr>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="assignment-1" class="level1">
 <h1>Assignment 1</h1>
 <div class="cell">
@@ -245,15 +259,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="b" class="level2">
 <h2 class="anchored" data-anchor-id="b">(b)</h2>
-<p>install.packages(“dslabs”)<br>
-library(dslabs)</p>
-<p>data(“polls_us_election_2016”) y &lt;- 0 for (col in names(polls_us_election_2016)) { y &lt;- y + sum(is.na(polls_us_election_2016[[col]])) } print(paste(“Toplam NA sayisi:”, y))</p>
-<p>guncelpolls &lt;- polls_us_election_2016</p>
-<p>guncelpolls[sapply(guncelpolls, is.numeric)] &lt;- lapply(guncelpolls[sapply(guncelpolls, is.numeric)], function(x) { x[is.na(x)] &lt;- 2003 return(x) })</p>
-<p>guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))] &lt;- lapply(guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))], function(x) {</p>
-<p>if (is.factor(x)) { x &lt;- as.character(x) } x[is.na(x)] &lt;- “Batuhan” return(x) })</p>
-<p>z &lt;- 0 for (col in names(guncelpolls)) { z &lt;- z + sum(is.na(guncelpolls[[col]])) } print(paste(“Toplam NA sayisi:”, z))</p>
-<p>print(head(guncelpolls, 10))</p>
 
 
 </section>

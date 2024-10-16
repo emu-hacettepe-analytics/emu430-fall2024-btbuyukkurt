@@ -46,9 +46,9 @@
     "href": "assignments/assignment-1.html",
     "title": "Assignment 1",
     "section": "",
-    "text": "install.packages(“knitr”) title: “Assignment 1”",
+    "text": "1 + 1\n\n[1] 2\n\n\nMy first assignment has two parts.",
     "crumbs": [
-      "title: \"Assignment 1\""
+      "Assignment 1"
     ]
   },
   {
@@ -82,10 +82,10 @@
     "objectID": "assignments/assignment-1.html#b",
     "href": "assignments/assignment-1.html#b",
     "title": "Assignment 1",
-    "section": "(b)",
-    "text": "(b)\ninstall.packages(“dslabs”)\nlibrary(dslabs)\ndata(“polls_us_election_2016”) y &lt;- 0 for (col in names(polls_us_election_2016)) { y &lt;- y + sum(is.na(polls_us_election_2016[[col]])) } print(paste(“Toplam NA sayisi:”, y))\nguncelpolls &lt;- polls_us_election_2016\nguncelpolls[sapply(guncelpolls, is.numeric)] &lt;- lapply(guncelpolls[sapply(guncelpolls, is.numeric)], function(x) { x[is.na(x)] &lt;- 2003 return(x) })\nguncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))] &lt;- lapply(guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))], function(x) {\nif (is.factor(x)) { x &lt;- as.character(x) } x[is.na(x)] &lt;- “Batuhan” return(x) })\nz &lt;- 0 for (col in names(guncelpolls)) { z &lt;- z + sum(is.na(guncelpolls[[col]])) } print(paste(“Toplam NA sayisi:”, z))\nprint(head(guncelpolls, 10))",
+    "section": "(b) :",
+    "text": "(b) :\ninstall.packages(“dslabs”)\nlibrary(dslabs) data(“polls_us_election_2016”) y &lt;- 0 for (col in names(polls_us_election_2016)) { y &lt;- y + sum(is.na(polls_us_election_2016[[col]])) } print(paste(“Toplam NA sayisi:”, y))\nguncelpolls &lt;- polls_us_election_2016\nguncelpolls[sapply(guncelpolls, is.numeric)] &lt;- lapply(guncelpolls[sapply(guncelpolls, is.numeric)], function(x) { x[is.na(x)] &lt;- 2003 return(x) })\nguncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))] &lt;- lapply(guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))], function(x) {\nif (is.factor(x)) { x &lt;- as.character(x) } x[is.na(x)] &lt;- “Batuhan” return(x) })\nz &lt;- 0 for (col in names(guncelpolls)) { z &lt;- z + sum(is.na(guncelpolls[[col]])) } print(paste(“Toplam NA sayisi:”, z))\nprint(head(guncelpolls, 10))",
     "crumbs": [
-      "title: \"Assignment 1\""
+      "install"
     ]
   }
 ]
