@@ -2,14 +2,50 @@
 title: "Assignment 1"
 ---
 
-# Assignment 1
-
-```{r}
-1 + 1
-```
-
 My first assignment has two parts.
 
 ## (a)
 
 ## (b)
+```{r}
+
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+install.packages("dslabs")  
+library(dslabs)
+
+data("polls_us_election_2016")
+y <- 0
+for (col in names(polls_us_election_2016)) {
+  y <- y + sum(is.na(polls_us_election_2016[[col]]))
+}
+print(paste("Toplam NA sayisi:", y))
+
+
+guncelpolls <- polls_us_election_2016 
+
+
+guncelpolls[sapply(guncelpolls, is.numeric)] <- lapply(guncelpolls[sapply(guncelpolls, is.numeric)], function(x) {
+  x[is.na(x)] <- 2003
+  return(x)
+})
+
+
+guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))] <- lapply(guncelpolls[sapply(guncelpolls, function(x) is.character(x) || is.factor(x))], function(x) {
+
+  if (is.factor(x)) {
+    x <- as.character(x)
+  }
+  x[is.na(x)] <- "Batuhan"
+  return(x)
+})
+
+z <- 0
+for (col in names(guncelpolls)) {
+  z <- z + sum(is.na(guncelpolls[[col]]))
+}
+print(paste("Toplam NA sayisi:", z))
+
+print(head(guncelpolls, 10))  
+```
+
