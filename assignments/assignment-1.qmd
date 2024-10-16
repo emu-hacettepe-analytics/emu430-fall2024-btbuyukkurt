@@ -1,5 +1,4 @@
-install.packages("knitr")
-title: "Assignment 1"
+
 ---
 
 # Assignment 1
