@@ -22,7 +22,9 @@ B) Survey responses from a targeted group
 C) Randomized experimental data(Answer)
 
 D) Online product reviews
+
 ## (b)
+
 ```{r}
 
 options(repos = c(CRAN = "https://cloud.r-project.org"))
