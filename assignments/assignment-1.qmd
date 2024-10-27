@@ -27,7 +27,7 @@ D) Online product reviews
 
 ```{r}
 
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = "https://cloud.r-project.org")) #Bu kısmı chatgptden aldım kodumu siteye ekleyemiyordum ama bunu yaptıktan sonra ekleyebildim
 
 install.packages("dslabs")  
 library(dslabs)
@@ -42,7 +42,7 @@ print(paste("Toplam NA sayisi:", y))
 
 guncelpolls <- polls_us_election_2016 
 
-
+#alttaki sapply ve lapply gibi komutları ve işlevlerini chatgptden aldım
 guncelpolls[sapply(guncelpolls, is.numeric)] <- lapply(guncelpolls[sapply(guncelpolls, is.numeric)], function(x) {
   x[is.na(x)] <- 2003
   return(x)
