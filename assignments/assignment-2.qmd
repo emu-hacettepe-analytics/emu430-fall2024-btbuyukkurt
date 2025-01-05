@@ -1,9 +1,178 @@
 ---
 title: "Assignment 2"
+output:
+  html_document:
+    code_folding: hide
 ---
 
 # Assignment 2
 
 ```{r}
-1 + 1
+
+
+library(tidyverse)
+library(rvest)
+library(stringr)
+
+url_2010_2023 <- "https://www.imdb.com/search/title/?title_type=feature&release_date=2010-01-01,2023-12-30&num_votes=2500,&country_of_origin=TR&count=250"
+url_until_2010 <- "https://www.imdb.com/search/title/?title_type=feature&release_date=,2009-12-31&num_votes=2500,&country_of_origin=TR&count=250"
+
+page1 <- read_html(url_2010_2023)
+page2 <- read_html(url_until_2010)
+
+
+titles_2010_2023 <- page1 |> html_nodes(".ipc-title__text") |> html_text()
+titles_2010_2023 <- tail(head(titles_2010_2023,-1),-1)
+titles_2010_2023 <- gsub("^\\d+\\.\\s*", "", titles_2010_2023)
+
+
+titles_until_2010 <- page2 |> html_nodes(".ipc-title__text") |> html_text()
+titles_until_2010 <- page2 |> html_nodes(".ipc-title__text") |> html_text()
+titles_until_2010 <- tail(head(titles_until_2010,-1),-1)
+
+
+years_2010_2023 <- page1 |> html_nodes(".dli-title-metadata-item:nth-child(1)") |> html_text()
+years_until_2010 <- page2 |> html_nodes(".dli-title-metadata-item:nth-child(1)") |> html_text()
+
+votes_2010_2023 <- page1 |> html_nodes(".ipc-rating-star--voteCount") |> html_text()
+votes_until_2010 <- page2 |> html_nodes(".ipc-rating-star--voteCount") |> html_text()
+votes_2010_2023 <- gsub("[^0-9]", "", votes_2010_2023)
+votes_2010_2023 <- as.numeric(votes_2010_2023)
+votes_2010_2023[votes_2010_2023 >= 1] <- votes_2010_2023[votes_2010_2023 >= 1] * 1000
+
+votes_until_2010 <- gsub("[^0-9]", "", votes_until_2010)
+votes_until_2010 <- as.numeric(votes_until_2010)
+votes_until_2010[votes_until_2010 >= 1] <- votes_until_2010[votes_until_2010 >= 1] * 1000
+
+
+durations_2010_2023 <- page1 |> html_nodes(".dli-title-metadata-item:nth-child(2)") |> html_text()
+durations_until_2010 <- page2 |> html_nodes(".dli-title-metadata-item:nth-child(2)") |> html_text()
+
+
+convert_to_minutes <- function(duration_text) {
+  durations <- str_match(duration_text, "(\\d+)h\\s?(\\d*)m?") 
+  hours <- as.numeric(durations[, 2])
+  minutes <- as.numeric(durations[, 3])
+  
+  total_minutes <- (ifelse(is.na(hours), 0, hours) * 60) + ifelse(is.na(minutes), 0, minutes)
+  
+}
+
+
+durations_2010_2023_minutes <- convert_to_minutes(durations_2010_2023)
+durations_until_2010_minutes <- convert_to_minutes(durations_until_2010)
+
+
+ratings_2010_2023 <- page1 |> html_nodes(".ratingGroup--imdb-rating") |> html_text()
+ratings_until_2010 <- page2 |> html_nodes(".ratingGroup--imdb-rating") |> html_text()
+
+ratings_2010_2023 <- str_extract(ratings_2010_2023, "^[0-9]+\\.[0-9]+")
+ratings_until_2010 <- str_extract(ratings_until_2010, "^[0-9]+\\.[0-9]+")
+
+
+titles <- c(titles_2010_2023, titles_until_2010)
+years <- c(years_2010_2023, years_until_2010)
+durations <- c(durations_2010_2023_minutes, durations_until_2010_minutes)
+ratings <- c(ratings_2010_2023, ratings_until_2010)
+votes <- c(votes_2010_2023, votes_until_2010)
+
+
+movie_data <- data.frame(
+  Title = titles,
+  Year = years,
+  Duration = durations,
+  Rating = as.numeric(ratings),
+  Votes = votes
+)
+```
+#Arranging the Data Frame
+
+```{r}
+movie_data_sorted <- movie_data %>%
+  arrange(desc(as.numeric(Rating))) 
+```
+
+#First and last 5 movies 
+```{r}
+top_5 <- movie_data %>% arrange(desc(Rating)) %>% head(5)
+bottom_5 <- movie_data %>% arrange(Rating) %>% head(5)
+print(top_5)
+print(bottom_5)
+```
+#Favori filmlerim
+```{r}
+favorite_titles <- c("A.R.O.G", "Yahsi Bati")
+
+# 'Title' sütunundaki boşlukları temizle ve küçük büyük harf farkını göz ardı et
+favorite_movies_data <- movie_data_sorted %>%
+  filter(tolower(gsub("\\s", "", Title)) %in% tolower(gsub("\\s", "", favorite_titles)))
+
+# Başlıkları sıralamaya göre sıralayalım
+favorite_movies_data$Rank <- match(favorite_movies_data$Title, movie_data_sorted$Title)
+
+# Sonuçları yazdıralım
+print(favorite_movies_data)
+```
+
+#Grafikler ve analizler
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Group by 'Year' and calculate average rating for each year
+yearly_rating_avg <- movie_data %>%
+  group_by(Year) %>%
+  summarise(Average_Rating = mean(as.numeric(Rating), na.rm = TRUE),
+            Num_Movies = n())
+
+# Plot 1: Scatter plot of average ratings per year
+ggplot(yearly_rating_avg, aes(x = Year, y = Average_Rating)) +
+  geom_point() +
+  labs(title = "Average Ratings of Turkish Movies Over the Years",
+       x = "Year", y = "Average Rating") +
+  theme_minimal()
+
+# Plot 2: Number of Movies Released per Year
+ggplot(yearly_rating_avg, aes(x = Year, y = Num_Movies)) +
+  geom_point() +
+  labs(title = "Number of Movies Released Per Year",
+       x = "Year", y = "Number of Movies") +
+  theme_minimal()
+# Box plot of ratings per year
+ggplot(movie_data, aes(x = as.factor(Year), y = as.numeric(Rating))) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Movie Ratings by Year",
+       x = "Year", y = "Rating") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+library(ggplot2)
+library(dplyr)
+
+# First, make sure Votes and Rating are numeric
+movie_data$Votes <- as.numeric(movie_data$Votes)
+movie_data$Rating <- as.numeric(movie_data$Rating)
+
+# Remove any rows with NA values for 'Votes' or 'Rating'
+movie_data_clean <- movie_data %>%
+  filter(!is.na(Votes) & !is.na(Rating))
+
+# Calculate correlation between Votes and Rating
+correlation <- cor(movie_data_clean$Votes, movie_data_clean$Rating)
+
+# Print the correlation coefficient
+print(paste("Correlation between Votes and Rating:", round(correlation, 2)))
+
+# Plotting the relationship between Votes and Rating
+ggplot(movie_data_clean, aes(x = Votes, y = Rating)) +
+  geom_point(alpha = 0.6) + 
+  labs(title = "Relationship between Votes and Rating",
+       x = "Number of Votes", y = "Rating") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Linear trend line
+  theme_minimal()
+```
+
+
+
+
 ```
