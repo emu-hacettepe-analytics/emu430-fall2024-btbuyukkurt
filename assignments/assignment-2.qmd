@@ -1,14 +1,16 @@
 ---
 title: "Assignment 2"
-output:
-  html_document:
-    code_folding: hide
+output: html
+code_folding: hide 
 ---
 
-# Assignment 2
+
+
 
 ```{r}
-
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
 
 library(tidyverse)
 library(rvest)
@@ -88,34 +90,37 @@ movie_data <- data.frame(
 #Arranging the Data Frame
 
 ```{r}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
 movie_data_sorted <- movie_data %>%
   arrange(desc(as.numeric(Rating))) 
 ```
 
-#First and last 5 movies 
+#First and last 5 movies and my favourite ones
 ```{r}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
 top_5 <- movie_data %>% arrange(desc(Rating)) %>% head(5)
 bottom_5 <- movie_data %>% arrange(Rating) %>% head(5)
 print(top_5)
 print(bottom_5)
-```
-#Favori filmlerim
-```{r}
 favorite_titles <- c("A.R.O.G", "Yahsi Bati")
-
-# 'Title' sütunundaki boşlukları temizle ve küçük büyük harf farkını göz ardı et
+clean_titles <- gsub("^\\d+\\.\\s*", "", movie_data_sorted$Title)
+favorite_titles_clean <- gsub("^\\d+\\.\\s*", "", favorite_titles)
 favorite_movies_data <- movie_data_sorted %>%
-  filter(tolower(gsub("\\s", "", Title)) %in% tolower(gsub("\\s", "", favorite_titles)))
-
-# Başlıkları sıralamaya göre sıralayalım
+  filter(tolower(clean_titles) %in% tolower(favorite_titles_clean))
 favorite_movies_data$Rank <- match(favorite_movies_data$Title, movie_data_sorted$Title)
-
-# Sonuçları yazdıralım
 print(favorite_movies_data)
+
 ```
 
 #Grafikler ve analizler
 ```{r}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
 library(dplyr)
 library(ggplot2)
 
@@ -130,14 +135,17 @@ ggplot(yearly_rating_avg, aes(x = Year, y = Average_Rating)) +
   geom_point() +
   labs(title = "Average Ratings of Turkish Movies Over the Years",
        x = "Year", y = "Average Rating") +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 
 # Plot 2: Number of Movies Released per Year
 ggplot(yearly_rating_avg, aes(x = Year, y = Num_Movies)) +
   geom_point() +
   labs(title = "Number of Movies Released Per Year",
        x = "Year", y = "Number of Movies") +
-  theme_minimal()
+  theme_minimal() +
+  scale_x_discrete(breaks = as.character(seq(min(yearly_rating_avg$Year), max(yearly_rating_avg$Year), by = 1))) + # Yıllar arası boşluğu artırıyoruz
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 # Box plot of ratings per year
 ggplot(movie_data, aes(x = as.factor(Year), y = as.numeric(Rating))) +
   geom_boxplot() +
@@ -169,6 +177,25 @@ ggplot(movie_data_clean, aes(x = Votes, y = Rating)) +
   labs(title = "Relationship between Votes and Rating",
        x = "Number of Votes", y = "Rating") +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Linear trend line
+  theme_minimal()
+
+
+# Clean the movie data (ensure 'Rating' and 'Duration' are numeric)
+movie_data_clean <- movie_data %>%
+  filter(!is.na(Rating) & !is.na(Duration))
+
+# Calculate the correlation
+correlation <- cor(movie_data_clean$Duration, movie_data_clean$Rating)
+
+# Print the correlation coefficient
+print(paste("Correlation between Duration and Rating:", round(correlation, 2)))
+
+# Plotting the relationship between Duration and Rating
+ggplot(movie_data_clean, aes(x = Duration, y = Rating)) +
+  geom_point(alpha = 0.6) +  # Scatter plot of points
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Add linear regression line
+  labs(title = "Relationship between Movie Duration and Rating",
+       x = "Duration (Minutes)", y = "Rating") +
   theme_minimal()
 ```
 
